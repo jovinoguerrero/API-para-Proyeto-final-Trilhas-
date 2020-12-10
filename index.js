@@ -22,11 +22,17 @@ app.get('/tasks', async (req, res) => {
 
 app.post('/tasks', async (req, res) => {
   const novo = await tasks.create({
+    title: req.body.title,
     description: req.body.description,
-    done: req.body.done
-   })
+    imagem: req.body.imagem,
+    tempo: req.body.tempo,
+    distancia: req.body.distancia,
+    altura: req.body.altura,
+    dificuldade: req.body.dificuldade
+  })
 
-  res.json(novo)
+
+  res.send(novo)
  
 })
 
@@ -41,7 +47,14 @@ app.get('/tasks/:id', async (req, res) => {
 // Update task
 app.put('/tasks/:id', async (req, res) => {
   const taskId = req.params.id
-  const body = await tasks.update({ description: req.body.description,  done: req.body.done },
+  const body = await tasks.update({     
+    title: req.body.title,
+    description: req.body.description,
+    imagem: req.body.imagem,
+    tempo: req.body.tempo,
+    distancia: req.body.distancia,
+    altura: req.body.altura,
+    dificuldade: req.body.dificuldade },
     { where: {id: taskId}})
 
   res.json({ action: 'Atualizando task', taskId: taskId })
