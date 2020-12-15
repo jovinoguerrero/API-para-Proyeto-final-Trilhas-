@@ -69,6 +69,29 @@ app.delete('/tasks/:id', async (req, res) => {
   
 })
 
-app.listen(3000, () => {
+// Pesquisa!
+app.get("/search", async (req, res) => {
+
+  const search = req.query.search
+
+  if(search == "") {
+
+    // return res.send("Pesquisa vazia");
+    return res.json({ encontrados: 0 });
+  } else {
+
+    
+    const pesquisa = await sequelize.query(`SELECT * FROM tasks WHERE title LIKE '%${search}%';`);
+
+    console.log(pesquisa[0][0].title);
+    console.log(pesquisa[0][0].description);
+    console.log(pesquisa[0][0].altura);
+
+    return res.send(pesquisa);
+  }
+})
+
+
+app.listen(3003, () => {
   console.log('Iniciando o ExpressJS na porta 3000')
 })
